@@ -90,19 +90,6 @@
 
   roles:
     - umask
-#   - devtools
-    - devtools7
-#   - open_office
-    - open_officeRH7
-#   - evince
-#   See line #39 (evince)
-#   - stattransfer
-    - stattransfer14
-#   - sublime
-    - sublime3
-#   - ultra-edit
-    - ultra-editRH7
-    - texliveRH7
 
   post_tasks:
     - name: register mime types
@@ -111,10 +98,6 @@
       shell:
     - name: update desktop database
       shell: update-desktop-database ~/.local/share/applications
-#   - name: Install texlive
-#     yum:
-#       name: texlive2016
-#       state: present
 
 #   - name: remove RHEL7.5
 #     command:  "/usr/bin/subscription-manager remove --all"
