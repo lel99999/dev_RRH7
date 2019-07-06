@@ -90,6 +90,10 @@
 
   roles:
     - umask
+    - emacs
+    - jdk
+    - odbc
+    - postgresql-client
 
   post_tasks:
     - name: register mime types
