@@ -89,7 +89,7 @@
       shell:  yum -y localinstall /tmp/epel*rpm
 
   roles:
-    - umask
+#   - umask
     - emacs
     - jdk
     - odbc
