@@ -83,13 +83,14 @@
     - debug:
         msg: "RHEL Enabled Repos: {{ enabled_repos }}" 
 # tasks:
-    - name: download epel
-      shell:  wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -O /tmp/epel-release-latest-7.noarch.rpm   
-    - name: Install epel
-      shell:  yum -y localinstall /tmp/epel*rpm
+#   - name: download epel
+#     shell:  wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -O /tmp/epel-release-latest-7.noarch.rpm   
+#   - name: Install epel
+#     shell:  yum -y localinstall /tmp/epel*rpm
 
   roles:
 #   - umask
+    - epel7
     - emacs
     - jdk
     - odbc
@@ -98,8 +99,8 @@
   post_tasks:
     - name: register mime types
       shell: update-mime-database /usr/share/mime/packages/
-    - name: create desktop application
-      shell:
+#   - name: create desktop application
+#     shell:
     - name: update desktop database
       shell: update-desktop-database ~/.local/share/applications
 
