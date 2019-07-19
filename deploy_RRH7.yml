@@ -91,8 +91,10 @@
   roles:
 #   - umask
     - epel7
-    - emacs
-    - jdk
+#   - emacs
+    - emacsRH7
+#   - jdk
+    - openjdk1.8
     - odbc
     - postgresql-client
 
