@@ -98,6 +98,19 @@
     - odbc
     - postgresql-client
 
+# hosts: analytics_terminal
+# become: yes
+# become_method: sudo
+# roles:
+#   - r-core
+#   - r-libs
+#   - r-shiny
+#   - r-shiny-config
+#   - r-studio-server
+#   - r-studio-server-config
+#   - r-studio-desktop
+~                       
+
   post_tasks:
     - name: register mime types
       shell: update-mime-database /usr/share/mime/packages/
