@@ -117,7 +117,6 @@
 #   - r-studio-server
 #   - r-studio-server-config
 #   - r-studio-desktop
-~                       
 
   post_tasks:
     - name: register mime types
