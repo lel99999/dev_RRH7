@@ -26,7 +26,8 @@
   roles:
     - epel7
 #   - emacsRH7
-    - openjdk1.8
+## openjdk1.8 already installed
+#   - openjdk1.8
 #   - odbc
 #   - postgresql-client
 #   - devtools
