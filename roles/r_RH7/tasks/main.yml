@@ -6,9 +6,10 @@
     regexp: (.*)umask(.*)
     state: present
 
+# R is a meta package that ensures R-core, R-core-devel, R-java, libRMath, libRMath-devel
 - name: Install R-core
   yum:
-    name: R-core
+    name: R
     state: "{{ r_core_state }}"
     disable_gpg_check: yes
   register: r_core_updated
@@ -37,7 +38,7 @@
     state: "{{ r_core_state }}"
     disable_gpg_check: yes
   with_items:
-    - R-devel
+#   - R-devel
     - blas64
     - blas64-devel
 #   - blas64-static
