@@ -128,7 +128,8 @@
   when: install_r_packages
 
 - name: Install R packages from Github
-  command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "library(devtools); if (! ('{{ item.name }}' %in% installed.packages()[,'Package'])) { install_github('{{ item.user }}/{{ item.name }}'); print('Added'); } else { print('Already installed'); }"
+  command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item.name }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item.name }}', repos=c('http://cran.rstudio.com/')); print('Added'); } else { print('Already installed'); }"
+# command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "library(devtools); if (! ('{{ item.name }}' %in% installed.packages()[,'Package'])) { install_github('{{ item.user }}/{{ item.name }}'); print('Added'); } else { print('Already installed'); }"
   with_items: "{{ r_packages_github }}"
   register: r_github_result
   failed_when: "r_github_result.rc != 0 or 'had non-zero exit status' in r_github_result.stderr"
@@ -149,14 +150,14 @@
     - r
   when: install_r_packages
 
-- name: Permissions for R package directory
-  file:
-    state: directory
-    mode: '2775'
-    path: "{{ item }}"
-    owner: root
-    group: "{{ restricted_group_name }}"
-    recurse: yes
-  with_items: "{{ r_system_package_dir }}"
-  tags:
-    - r
+#- name: Permissions for R package directory
+#  file:
+#    state: directory
+#    mode: '2775'
+#    path: "{{ item }}"
+#    owner: root
+#    group: "{{ restricted_group_name }}"
+#    recurse: yes
+#  with_items: "{{ r_system_package_dir }}"
+#  tags:
+#    - r

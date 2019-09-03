@@ -21,7 +21,7 @@ r_packages:
 
 r_packages_github:
   - name: shinydashboard
-    user: rstudio
+#   user: rstudio
 
 r_env_vars:
   CC: /opt/rh/devtoolset-7/root/usr/bin/gcc
@@ -39,3 +39,5 @@ r_packages_with_opts:
 r_system_package_dir:
   - /usr/lib64/R/library
   - /usr/share/doc
+
+#restricted_group_name:
