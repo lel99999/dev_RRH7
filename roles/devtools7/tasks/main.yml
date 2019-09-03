@@ -16,7 +16,7 @@
   tags:
     - devtools7
 
-- name: Install updated devtools
+- name: Install Updated Devtoolset 7
   yum:
     name: "{{ item }}"
     state: present
