@@ -7,68 +7,12 @@
   become: yes
   become_method: sudo
 
-# COMMON for Research Environment
-# roles:
-#   - {role: iptables, when: "iptables_config"}
-#   - {role: common, when: "install_glusterfs"}
-#   - {role: epel, when: "use_epel and not 'production' in group_names"}
-#   - emacs
-#   - jdk
-#   - odbc
-#   - postgresql-client
-# post_tasks:
-#   - name: research eod symlinks
-#     file:
-#        src: "{{ item.src }}"
-#        dest: "{{ item.dest }}"
-#     with_items: "{{ eod_symlinks }}"
-
-#   - name: Install xauth dependency
-#     yum:
-#       name: xorg-x11-xauth
-#       state: present
-
-#   - name: Ensure X11 Forwarding is present
-#     lineinfile:
-#       dest: /etc/ssh/sshd_config
-#       regexp: ^\s*X11Forwarding\s*no
-#       line: X11Forwarding yes
-#     when: not custom_repo
-
-#   - name: Ensure ClientAliveCountMax is set to correct value
-#     lineinfile:
-#       dest: /etc/ssh/sshd_config
-#       regexp: ^\s*ClientAliveCountMax\s*[0-9]+
-#       line: ClientAliveCountMax 384 
-#     when: not custom_repo
-
-#   - name: Ensure run level 5
-#     lineinfile:
-#       dest: /etc/inittab
-#       regexp: initdefault
-#       line: "id:5:initdefault:"
-#
-
-#   - name: research printers symlinks
-#     file:
-#       state: link
-#       src: "{{ item.src }}"
-#       dest: "{{ item.dest }}"
-#     with_items: "{{ printers_symlinks }}"
-
-#   - name: Install git
-#     yum:
-#       name: git
-#       state: present
-
-
-
   pre_tasks:
     - debug:
 #       msg: "Variables: _uid = {{ _uid }}, _pwd = **********"
         msg: "Variables: _uid = {{ _uid }}, _pwd = {{ _pwd }}"
     - name: register RHEL7.5
-      command: "/usr/bin/subscription-manager register --username {{ _uid }} --password {{ _pwd }} --auto-attach"
+      command: "/usr/bin/subscription-manager register --username {{ _uid }} --password {{ _pwd }} --auto-attach --force"
 #     when: _uid != "" and _pwd != ""
 #     command: "/usr/bin/subscription-manager register --username <name> --password <password> --auto-attach"
     - name: register RHEL7 repo
@@ -81,54 +25,51 @@
       shell: "/usr/bin/subscription-manager repos --list-enabled"
       register: enabled_repos
     - debug:
-        msg: "RHEL Enabled Repos: {{ enabled_repos }}" 
-# tasks:
-#   - name: download epel
-#     shell:  wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -O /tmp/epel-release-latest-7.noarch.rpm   
-#   - name: Install epel
-#     shell:  yum -y localinstall /tmp/epel*rpm
+        msg: "RHEL Enabled Repos: {{ enabled_repos }}"
+  tasks:
+    - name: Install Development Tools
+      shell:  yum groupinstall "Development Tools" -y
 
   roles:
-#   - umask
     - epel7
-#   - emacs
-    - emacsRH7
-#   - jdk
+#   - emacsRH7
     - openjdk1.8
-    - odbc
-    - postgresql-client
-# analytics terminal
-    - r-core
-    - r-libs
-    - r-shiny
-    - r-shiny-config
-    - r-studio-server
-    - r-studio-server-config
-    - r-studio-desktop
+#   - odbc
+#   - postgresql-client
+#   - devtools
 
-# hosts: analytics_terminal
+    - devtools7
+#   - python2RH7
+#   - python3RH7
+    - r_RH7
+
+# hosts: research_python
 # become: yes
 # become_method: sudo
 # roles:
+#   - devtools
+#   - devtools6
+#   - {role: python, when: "custom_repo"}
+#   - {role: python-build, when: "not custom_repo"}
+#   - {role: python3, when: "custom_repo"}
+#   - {role: python3-build, when: "not custom_repo"}
+#   - {role: python-libs}
+#   - postgresql-client
 #   - r-core
 #   - r-libs
-#   - r-shiny
-#   - r-shiny-config
+#   - r-studio-desktop
 #   - r-studio-server
 #   - r-studio-server-config
-#   - r-studio-desktop
+#   - pycharm
+#   - gocd
+#   - stattransfer14
+
+
 
   post_tasks:
-    - name: register mime types
-      shell: update-mime-database /usr/share/mime/packages/
-#   - name: create desktop application
-#     shell:
-    - name: update desktop database
-      shell: update-desktop-database ~/.local/share/applications
-
 #   - name: remove RHEL7.5
 #     command:  "/usr/bin/subscription-manager remove --all"
 #   - name: unregister RHEL7.5
 #     command:  "/usr/bin/subscription-manager unregister"
 #   - name: clean RHEL7.5
-#     command:  "/usr/bin/subscription-manager clean"
+#     command:  "/usr/bin/subscription-manager clean"7

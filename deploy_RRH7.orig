@@ -1,0 +1,134 @@
+- hosts: RRH7
+  #- hosts: wdcdev
+  vars:
+    custom_repo: true
+  vars_files:
+    - ~/RHACCOUNT
+  become: yes
+  become_method: sudo
+
+# COMMON for Research Environment
+# roles:
+#   - {role: iptables, when: "iptables_config"}
+#   - {role: common, when: "install_glusterfs"}
+#   - {role: epel, when: "use_epel and not 'production' in group_names"}
+#   - emacs
+#   - jdk
+#   - odbc
+#   - postgresql-client
+# post_tasks:
+#   - name: research eod symlinks
+#     file:
+#        src: "{{ item.src }}"
+#        dest: "{{ item.dest }}"
+#     with_items: "{{ eod_symlinks }}"
+
+#   - name: Install xauth dependency
+#     yum:
+#       name: xorg-x11-xauth
+#       state: present
+
+#   - name: Ensure X11 Forwarding is present
+#     lineinfile:
+#       dest: /etc/ssh/sshd_config
+#       regexp: ^\s*X11Forwarding\s*no
+#       line: X11Forwarding yes
+#     when: not custom_repo
+
+#   - name: Ensure ClientAliveCountMax is set to correct value
+#     lineinfile:
+#       dest: /etc/ssh/sshd_config
+#       regexp: ^\s*ClientAliveCountMax\s*[0-9]+
+#       line: ClientAliveCountMax 384 
+#     when: not custom_repo
+
+#   - name: Ensure run level 5
+#     lineinfile:
+#       dest: /etc/inittab
+#       regexp: initdefault
+#       line: "id:5:initdefault:"
+#
+
+#   - name: research printers symlinks
+#     file:
+#       state: link
+#       src: "{{ item.src }}"
+#       dest: "{{ item.dest }}"
+#     with_items: "{{ printers_symlinks }}"
+
+#   - name: Install git
+#     yum:
+#       name: git
+#       state: present
+
+
+
+  pre_tasks:
+    - debug:
+#       msg: "Variables: _uid = {{ _uid }}, _pwd = **********"
+        msg: "Variables: _uid = {{ _uid }}, _pwd = {{ _pwd }}"
+    - name: register RHEL7.5
+      command: "/usr/bin/subscription-manager register --username {{ _uid }} --password {{ _pwd }} --auto-attach"
+#     when: _uid != "" and _pwd != ""
+#     command: "/usr/bin/subscription-manager register --username <name> --password <password> --auto-attach"
+    - name: register RHEL7 repo
+      command: "/usr/bin/subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-optional-rpms"
+    - name: register RHEL7 RHSCL Repo
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-server-rhscl-7-rpms"
+    - name: register RHEL7 DevTools
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-7-server-devtools-rpms"
+    - name: list RHEL enabled repos
+      shell: "/usr/bin/subscription-manager repos --list-enabled"
+      register: enabled_repos
+    - debug:
+        msg: "RHEL Enabled Repos: {{ enabled_repos }}" 
+# tasks:
+#   - name: download epel
+#     shell:  wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -O /tmp/epel-release-latest-7.noarch.rpm   
+#   - name: Install epel
+#     shell:  yum -y localinstall /tmp/epel*rpm
+
+  roles:
+#   - umask
+    - epel7
+#   - emacs
+    - emacsRH7
+#   - jdk
+    - openjdk1.8
+    - odbc
+    - postgresql-client
+# analytics terminal
+    - r-core
+    - r-libs
+    - r-shiny
+    - r-shiny-config
+    - r-studio-server
+    - r-studio-server-config
+    - r-studio-desktop
+
+# hosts: analytics_terminal
+# become: yes
+# become_method: sudo
+# roles:
+#   - r-core
+#   - r-libs
+#   - r-shiny
+#   - r-shiny-config
+#   - r-studio-server
+#   - r-studio-server-config
+#   - r-studio-desktop
+
+  post_tasks:
+    - name: register mime types
+      shell: update-mime-database /usr/share/mime/packages/
+#   - name: create desktop application
+#     shell:
+    - name: update desktop database
+      shell: update-desktop-database ~/.local/share/applications
+
+#   - name: remove RHEL7.5
+#     command:  "/usr/bin/subscription-manager remove --all"
+#   - name: unregister RHEL7.5
+#     command:  "/usr/bin/subscription-manager unregister"
+#   - name: clean RHEL7.5
+#     command:  "/usr/bin/subscription-manager clean"
