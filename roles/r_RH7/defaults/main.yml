@@ -10,7 +10,7 @@ r_dependencies:
   - QuantLib-devel
   - libcurl-devel
   - libxml2-devel
-  - hunspell-devel
+#  - hunspell-devel
 # - udunits2
 # - udunits2-devel
 
