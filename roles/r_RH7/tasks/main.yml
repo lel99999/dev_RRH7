@@ -93,6 +93,7 @@
     name: "{{ item }}"
     state: present
     disable_gpg_check: yes
+    exclude: texlive-texmf-xetex*
   with_items: "{{ r_dependencies }}"
   tags:
     - r
