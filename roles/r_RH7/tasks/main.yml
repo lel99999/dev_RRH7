@@ -71,7 +71,7 @@
     - r
 
 - name: Install texlive additional fixes
-  shell: yum -y install texlive texlive-*
+  shell: yum -y install texlive texlive-* --exclude=texlive-cyrillic*
   
 # texlive installation and dependencies for RedHat 7 are old (2012) and require this deployment to help resolve 
 - name: Install texlive dependency fixes
