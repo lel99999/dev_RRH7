@@ -82,8 +82,8 @@
     enabled: yes
     gpgcheck: no
 
-#- name: Install texlive additional fixes
-#  shell: yum -y install texlive texlive-*
+- name: Install texlive additional fixes
+  shell: yum -y install texlive texlive-*noarch
 #  shell: yum -y install texlive texlive-* --exclude=texlive-kpathsea* texlive-cyrillic* texlive-metapost* texlive-amstex*
   
 - name: Install packages required by R packages
