@@ -71,7 +71,8 @@
     - r
 
 # texlive installation and dependencies for RedHat 7 are old (2012) and require this deployment to help resolve 
-#- name: Install texlive dependency fixes
+- name: Install texlive dependency fixes
+  shell: yum install -y http://rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-xetex-2007-60.el6_7.x86_64.rpm
 #  shell: yum install -y http://mirrors.ctan.org/support/texlive/texlive-dummy/EnterpriseLinux-7/texlive-dummy-2012a-1.el7.noarch.rpm --exclude=texlive-cyrillic*
 
 - name: Add texlive repository
@@ -82,8 +83,8 @@
     enabled: yes
     gpgcheck: no
 
-- name: Install texlive additional fixes
-  shell: yum -y install texlive texlive-*noarch
+#- name: Install texlive additional fixes
+#  shell: yum -y install texlive texlive-*noarch
 #  shell: yum -y install texlive texlive-* --exclude=texlive-kpathsea* texlive-cyrillic* texlive-metapost* texlive-amstex*
   
 - name: Install packages required by R packages
