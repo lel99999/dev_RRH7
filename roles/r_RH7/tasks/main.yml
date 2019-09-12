@@ -69,7 +69,9 @@
     - Makeconf
   tags:
     - r
-
+- name: Install texlive dependency fixes
+  shell: yum -y install texlive texlive-*
+  
 - name: Install packages required by R packages
   yum:
     name: "{{ item }}"
