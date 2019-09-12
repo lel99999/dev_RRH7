@@ -11,8 +11,8 @@ r_dependencies:
   - libcurl-devel
   - libxml2-devel
   - hunspell-devel
-  - udunits2
-  - udunits2-devel
+# - udunits2
+# - udunits2-devel
 
 r_packages:
   - "devtools7"
