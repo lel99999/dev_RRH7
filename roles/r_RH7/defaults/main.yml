@@ -5,7 +5,7 @@ install_r_packages: true
 r_core_state: present
 
 r_dependencies:
-  - texlive-collection-xetex
+#  - texlive-collection-xetex
   - QuantLib
   - QuantLib-devel
   - libcurl-devel
