@@ -9,10 +9,10 @@ r_dependencies:
   - QuantLib
   - QuantLib-devel
   - libcurl-devel
-  - libxml2-devel
-#  - hunspell-devel
-# - udunits2
-# - udunits2-devel
+#  - libxml2-devel
+  - hunspell-devel
+  - udunits2
+  - udunits2-devel
 
 r_packages:
   - "devtools7"
