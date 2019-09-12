@@ -70,13 +70,21 @@
   tags:
     - r
 
+# texlive installation and dependencies for RedHat 7 are old (2012) and require this deployment to help resolve 
+#- name: Install texlive dependency fixes
+#  shell: yum install -y http://mirrors.ctan.org/support/texlive/texlive-dummy/EnterpriseLinux-7/texlive-dummy-2012a-1.el7.noarch.rpm --exclude=texlive-cyrillic*
+
+- name: Add texlive repository
+  yum_repository:
+    name: texlive
+    description: texlive repo
+    baseurl: http://jnovy.fedorapeople.org/texlive/2012/packages.f17/
+    enabled=1
+    gpgcheck=0
+
 - name: Install texlive additional fixes
   shell: yum -y install texlive texlive-* --exclude=texlive-kpathsea* texlive-cyrillic* texlive-metapost* texlive-amstex*
   
-# texlive installation and dependencies for RedHat 7 are old (2012) and require this deployment to help resolve 
-- name: Install texlive dependency fixes
-  shell: yum install -y http://mirrors.ctan.org/support/texlive/texlive-dummy/EnterpriseLinux-7/texlive-dummy-2012a-1.el7.noarch.rpm --exclude=texlive-cyrillic*
-
 - name: Install packages required by R packages
   yum:
     name: "{{ item }}"
