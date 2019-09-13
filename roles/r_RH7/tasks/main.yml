@@ -72,7 +72,7 @@
 
 # texlive installation and dependencies for RedHat 7 are old (2012) and require this deployment to help resolve (texlive-texmf-xetex)
 - name: Install texlive dependency fixes
-  shell: yum install -y http://mirror.centos.org/centos/6/os/x86_64/Packages/texlive-texmf-xetex-2007-39.el6_7.noarch.rpm --nogpgcheck
+  shell: yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/texlive-xetex-svn26330.0.9997.5-43.el7.noarch.rpm --nogpgcheck
 #  shell:  yum install -y texlive-collection-xetex
 #  shell: yum install -y http://rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-xetex-2007-60.el6_7.x86_64.rpm
 #  shell: yum install -y http://mirrors.ctan.org/support/texlive/texlive-dummy/EnterpriseLinux-7/texlive-dummy-2012a-1.el7.noarch.rpm --exclude=texlive-cyrillic*
