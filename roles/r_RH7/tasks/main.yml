@@ -84,7 +84,8 @@
 
 # texlive installation and dependencies for RedHat 7 are old (2012) and require this deployment to help resolve (texlive-texmf-xetex)
 - name: Install texlive dependency fixes
-  shell: yum install -y http://rpmfind.net/linux/centos/7.6.1810/os/x86_64/Packages/texlive-2012-43.20130427_r30134.el7.x86_64.rpm
+  shell: yum install -y https://rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/t/texlive-2018-25.fc30.noarch.rpm
+# shell: yum install -y http://rpmfind.net/linux/centos/7.6.1810/os/x86_64/Packages/texlive-2012-43.20130427_r30134.el7.x86_64.rpm
 #  shell: yum install -y texlive2016
 #  shell: yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/texlive-xetex-svn26330.0.9997.5-43.el7.noarch.rpm --nogpgcheck
 #  shell:  yum install -y texlive-collection-xetex
