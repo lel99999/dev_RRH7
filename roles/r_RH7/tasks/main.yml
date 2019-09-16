@@ -100,6 +100,9 @@
 #    enabled: yes
 #    gpgcheck: no
 
+- name: Remove blocking package
+  shell: yum remove -y texlive-collection-xetex-svn29634.0-43.20130427_r30134.el7.noarch
+  
 - name: Install texlive additional fixes
   shell: yum install -y http://www.rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-texmf-xetex-2007-39.el6_7.noarch.rpm --nogpgcheck
 #  shell: yum -y install texlive texlive-*noarch
