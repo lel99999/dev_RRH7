@@ -100,7 +100,8 @@
 #    enabled: yes
 #    gpgcheck: no
 
-#- name: Install texlive additional fixes
+- name: Install texlive additional fixes
+  shell: yum install -y http://www.rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-texmf-xetex-2007-39.el6_7.noarch.rpm --nogpgcheck
 #  shell: yum -y install texlive texlive-*noarch
 #  shell: yum -y install texlive texlive-* --exclude=texlive-kpathsea* texlive-cyrillic* texlive-metapost* texlive-amstex*
   
