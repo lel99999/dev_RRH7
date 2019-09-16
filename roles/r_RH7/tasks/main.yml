@@ -105,11 +105,11 @@
 - name: Install packages required by R packages
   yum:
     name: "{{ item }}"
-    state: latest
-#    state: present
+#    state: latest
+    state: present
     disable_gpg_check: yes
     skip_broken: yes
-    exclude: texlive-texmf-xetex*
+    exclude:  texlive-* texlive-texmf-xetex*
   with_items: "{{ r_dependencies }}"
   tags:
     - r
