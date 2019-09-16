@@ -111,9 +111,12 @@
     skip_broken: yes
     exclude:  texlive-* texlive-texmf-xetex*
   with_items: "{{ r_dependencies }}"
+  register: r_dependencies
   tags:
     - r
-
+- debug:
+    msg: "R dependencies {{ r_dependencies }}"
+    
 - name: Find any locked directories
   find:
     paths: "{{ r_system_package_dir }}"
