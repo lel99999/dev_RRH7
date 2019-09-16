@@ -3,7 +3,7 @@
 - name: Instell Latest EPEL 7 Release
  #  shell:  yum install "{{ epel_url }}" -y --nogpgcheck
   yum:
-    name: {{ epel_url }}
+    name: "{{ epel_url }}"
     state: present
     disable_gpg_check: yes
   tags:

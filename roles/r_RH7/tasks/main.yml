@@ -79,7 +79,7 @@
 - name: Extract texlive 2019
   unarchive:
     src: /tmp/install-tl-unx.tar.gz
-    dest: /opt/texlive2019
+    dest: /opt
     remote_src: yes
 
 # texlive installation and dependencies for RedHat 7 are old (2012) and require this deployment to help resolve (texlive-texmf-xetex)
