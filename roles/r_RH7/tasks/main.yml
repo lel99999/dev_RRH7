@@ -41,7 +41,7 @@
 #   - R-devel
     - blas64
     - blas64-devel
-#   - blas64-static
+    - blas64-static
 #   - blas
 #   - blas-devel
     - lapack64
@@ -70,9 +70,21 @@
   tags:
     - r
 
+# Get texlive 2019 install
+- name: Get texlive 2019 binary
+  get_url:
+    url: http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+    dest: /tmp/install-tl-unx.tar.gz
+    mode: 0755
+- name: Extract texlive 2019
+  unarchive:
+    src: /tmp/install-tl-unx.tar.gz
+    dest: /opt/texlive2019
+    remote_src: yes
+
 # texlive installation and dependencies for RedHat 7 are old (2012) and require this deployment to help resolve (texlive-texmf-xetex)
-- name: Install texlive dependency fixes
-  shell: yum install -y texlive2016
+#- name: Install texlive dependency fixes
+#  shell: yum install -y texlive2016
 #  shell: yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/texlive-xetex-svn26330.0.9997.5-43.el7.noarch.rpm --nogpgcheck
 #  shell:  yum install -y texlive-collection-xetex
 #  shell: yum install -y http://rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-xetex-2007-60.el6_7.x86_64.rpm
