@@ -6,8 +6,8 @@ r_core_state: present
 
 r_dependencies:
 #  - texlive-collection-xetex
-  - QuantLib
-  - QuantLib-devel
+#  - QuantLib
+#  - QuantLib-devel
   - libcurl-devel
   - libxml2-devel
   - hunspell-devel
