@@ -15,6 +15,9 @@ r_dependencies:
   - udunits2-devel
 ## required for R Crypto
   - openssl-devel
+  - protobuf-devel
+  - jq-devel
+  - zeromq-devel
 
 r_packages:
   - "devtools7"
