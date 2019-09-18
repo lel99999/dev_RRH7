@@ -1,3 +1,0 @@
----
-# envir: {dev.local,dev,prod,aws}
-envir: dev
