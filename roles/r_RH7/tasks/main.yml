@@ -6,6 +6,22 @@
     regexp: (.*)umask(.*)
     state: present
 
+- name: Install packages required by R packages
+  yum:
+    name: "{{ item }}"
+#    state: latest
+    state: present
+    disable_gpg_check: yes
+    skip_broken: yes
+    exclude:  texlive-* texlive-texmf-xetex*
+  with_items: "{{ r_dependencies }}"
+  register: r_dependencies
+  tags:
+    - r
+- debug:
+    msg: "R dependencies {{ r_dependencies }}"
+    
+
 # R is a meta package that ensures R-core, R-core-devel, R-java, libRMath, libRMath-devel
 - name: Install R-core
   yum:
@@ -83,8 +99,8 @@
     remote_src: yes
 
 # texlive installation and dependencies for RedHat 7 are old (2012) and require this deployment to help resolve (texlive-texmf-xetex)
-- name: Install texlive dependency fixes
-  shell: yum install -y https://rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/t/texlive-2018-25.fc30.noarch.rpm https://rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/t/texlive-obsolete-2018-25.fc30.noarch.rpm
+#- name: Install texlive dependency fixes
+#  shell: yum install -y https://rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/t/texlive-2018-25.fc30.noarch.rpm https://rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/t/texlive-obsolete-2018-25.fc30.noarch.rpm --nogpgcheck --skip-broken
 # shell: yum install -y http://rpmfind.net/linux/centos/7.6.1810/os/x86_64/Packages/texlive-2012-43.20130427_r30134.el7.x86_64.rpm
 #  shell: yum install -y texlive2016
 #  shell: yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/texlive-xetex-svn26330.0.9997.5-43.el7.noarch.rpm --nogpgcheck
@@ -100,11 +116,25 @@
 #    enabled: yes
 #    gpgcheck: no
 
+#- name: Remove blocking package
+#  shell: yum remove -y texlive-collection-xetex-svn29634.0-43.20130427_r30134.el7.noarch
+  
+#- name: Install dependencies for texlive-texmf-xetex
+#  http://www.rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-texmf-errata-xetex-2007-7.1.el6.noarch.rpm
+#  http://www.rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-texmf-2007-39.el6_7.noarch.rpm
+#  http://www.rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/p/perl-PDF-Reuse-0.39-8.fc30.noarch.rpm
+#  http://www.rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/p/perl-Text-PDF-0.31-8.fc30.noarch.rpm
+#  http://www.rpmfind.net/linux/fedora/linux/updates/30/Everything/x86_64/Packages/p/perl-libs-5.28.2-439.fc30.x86_64.rpm
+  
 #- name: Install texlive additional fixes
+#  shell: yum install -y http://www.rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-texmf-xetex-2007-39.el6_7.noarch.rpm http://www.rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/p/perl-PDF-Reuse-0.39-8.fc30.noarch.rpm http://www.rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-texmf-2007-39.el6_7.noarch.rpm http://www.rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-texmf-errata-xetex-2007-7.1.el6.noarch.rpm --nogpgcheck --skip-broken
+# shell: yum install -y http://www.rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/p/perl-PDF-Reuse-0.39-8.fc30.noarch.rpm http://www.rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/p/perl-Text-PDF-0.31-8.fc30.noarch.rpm http://www.rpmfind.net/linux/fedora/linux/updates/30/Everything/x86_64/Packages/p/perl-libs-5.28.2-439.fc30.x86_64.rpm http://www.rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-texmf-xetex-2007-39.el6_7.noarch.rpm http://www.rpmfind.net/linux/fedora/linux/releases/30/Everything/x86_64/os/Packages/p/perl-PDF-Reuse-0.39-8.fc30.noarch.rpm http://www.rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-texmf-2007-39.el6_7.noarch.rpm http://www.rpmfind.net/linux/centos/6.10/os/x86_64/Packages/texlive-texmf-errata-xetex-2007-7.1.el6.noarch.rpm --nogpgcheck --skip-broken
 #  shell: yum -y install texlive texlive-*noarch
 #  shell: yum -y install texlive texlive-* --exclude=texlive-kpathsea* texlive-cyrillic* texlive-metapost* texlive-amstex*
   
 - name: Install packages required by R packages
+  vars:
+    r_dependencies_flag: false
   yum:
     name: "{{ item }}"
 #    state: latest
@@ -113,6 +143,7 @@
     skip_broken: yes
     exclude:  texlive-* texlive-texmf-xetex*
   with_items: "{{ r_dependencies }}"
+  when: r_dependencies_flag
   register: r_dependencies
   tags:
     - r
@@ -191,14 +222,15 @@
     - r
   when: install_r_packages
 
-#- name: Permissions for R package directory
-#  file:
-#    state: directory
-#    mode: '2775'
-#    path: "{{ item }}"
-#    owner: root
-#    group: "{{ restricted_group_name }}"
-#    recurse: yes
-#  with_items: "{{ r_system_package_dir }}"
-#  tags:
-#    - r
+- name: Permissions for R package directory
+  file:
+    state: directory
+    mode: '2775'
+    path: "{{ item }}"
+    owner: root
+    group: "{{ restricted_group_name }}"
+    recurse: yes
+  with_items: "{{ r_system_package_dir }}"
+  when: envir != "dev.local"
+  tags:
+    - r
