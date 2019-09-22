@@ -13,13 +13,13 @@
     state: present
     disable_gpg_check: yes
     skip_broken: yes
-    exclude:  texlive-* texlive-texmf-xetex*
+    exclude:  texlive-texmf-xetex
   with_items: "{{ r_dependencies }}"
   register: r_dependencies
   tags:
     - r
-- debug:
-    msg: "R dependencies {{ r_dependencies }}"
+#- debug:
+#    msg: "R dependencies {{ r_dependencies }}"
     
 
 # R is a meta package that ensures R-core, R-core-devel, R-java, libRMath, libRMath-devel
