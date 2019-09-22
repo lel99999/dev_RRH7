@@ -203,7 +203,7 @@
   environment: "{{ r_env_vars }}"
   tags:
     - r
-  when: install_r_packages
+  when: install_r_packages and do_r_install_packages
 
 - name: Install R packages from Github
   command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item.name }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item.name }}', repos=c('http://cran.rstudio.com/')); print('Added'); } else { print('Already installed'); }"
