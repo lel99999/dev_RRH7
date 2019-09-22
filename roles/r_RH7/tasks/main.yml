@@ -13,7 +13,7 @@
     state: present
     disable_gpg_check: yes
     skip_broken: yes
-    exclude:  texlive-texmf-xetex
+#   exclude:  texlive-texmf-xetex
   with_items: "{{ r_dependencies }}"
   register: r_dependencies
   tags:
