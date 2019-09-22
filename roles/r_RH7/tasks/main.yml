@@ -180,7 +180,10 @@
     - r
   when: install_r_updates
 
+# https://github.com/jeroen/curl/issues/204 ----------------   curl_sslbackend error --------------------
 - name: Install R packages
+  vars:
+    do_r_install_packages: False
   command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
   with_items: "{{ r_packages }}"
   register: r_result
@@ -189,7 +192,7 @@
   environment: "{{ r_env_vars }}"
   tags:
     - r
-  when: install_r_packages
+  when: install_r_packages and do_r_install_packages
 
 - name: Install R packages with opts
   command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item.name }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item.name }}', configure.args='--with-{{ item.name }}-lib={{ item.lib }}, --with-{{ item.name }}-include={{ item.include}}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
