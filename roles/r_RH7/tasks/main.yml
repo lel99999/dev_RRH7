@@ -195,6 +195,8 @@
   when: install_r_packages and do_r_install_packages
 
 - name: Install R packages with opts
+  vars:
+    do_r_install_w_opts: False
   command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item.name }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item.name }}', configure.args='--with-{{ item.name }}-lib={{ item.lib }}, --with-{{ item.name }}-include={{ item.include}}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
   with_items: "{{ r_packages_with_opts }}"
   register: r_result
@@ -203,7 +205,7 @@
   environment: "{{ r_env_vars }}"
   tags:
     - r
-  when: install_r_packages and do_r_install_packages
+  when: install_r_packages and do_r_install_w_opts
 
 - name: Install R packages from Github
   command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item.name }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item.name }}', repos=c('http://cran.rstudio.com/')); print('Added'); } else { print('Already installed'); }"
