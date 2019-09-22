@@ -45,7 +45,7 @@
 
 - name: Open port 3838 in iptables
   command: "iptables -I {{ iptables_chain }} 3 -m state --state NEW -p tcp --dport 3838 -s {{ hostvars[item]['ansible_ssh_host'] }} -j ACCEPT"
-  when: iptables_config and deploy_iptables
+  when: iptables_config and deploy_iptables and envir != "dev.local"
   with_items: "{{ groups['proxy_server']|default(omit) }}"
   tags:
     - shiny
@@ -55,6 +55,12 @@
   when: iptables_config and deploy_iptables
   tags:
     - shiny
+
+- name: Create upstart directory
+  file:
+    dest: /etc/init
+    state: directory
+  when: envir == "dev.local"
 
 - name: Install shiny-server upstart script
   template:

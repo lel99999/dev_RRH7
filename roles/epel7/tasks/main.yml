@@ -6,6 +6,7 @@
     name: "{{ epel_url }}"
     state: present
     disable_gpg_check: yes
+#  shell:  yum install "{{ epel_url }}" -y --nogpgcheck
   tags:
     - epel7
 #- name: Get EPEL repo
