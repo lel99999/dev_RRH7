@@ -24,7 +24,7 @@
       shell:  yum groupinstall "Development Tools" -y
 
   roles:
-#   - epel7
+    - epel7
 #   - emacsRH7
 ## openjdk1.8 already installed
 #   - openjdk1.8
@@ -34,8 +34,8 @@
 
     - epel7
     - devtools7
-#   - python2RH7
-#   - python3RH7
+    - python2RH7
+    - python3RH7
     - r_RH7
     - r-studio-desktopRH7
     - r-studio-serverRH7
