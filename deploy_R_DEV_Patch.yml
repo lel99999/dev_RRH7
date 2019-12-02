@@ -1,0 +1,52 @@
+- hosts: wdcdevrerpyl02
+  #- hosts: wdcdev
+  vars:
+    custom_repo: true
+# vars_files:
+#   - ~/RHACCOUNT
+  become: yes
+  become_method: sudo
+
+  pre_tasks:
+    - name: register RHEL7 repo
+      command: "/usr/bin/subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-optional-rpms"
+    - name: register RHEL7 RHSCL Repo
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-server-rhscl-7-rpms"
+    - name: register RHEL7 DevTools
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-7-server-devtools-rpms"
+    - name: list RHEL enabled repos
+      shell: "/usr/bin/subscription-manager repos --list-enabled"
+      register: enabled_repos
+    - debug:
+        msg: "RHEL Enabled Repos: {{ enabled_repos }}"
+  tasks:
+    - name: Install Development Tools
+      shell:  yum groupinstall "Development Tools" -y
+
+  roles:
+    - epel7
+#   - emacsRH7
+## openjdk1.8 already installed
+#   - openjdk1.8
+#   - odbc
+#   - postgresql-client
+#   - devtools
+
+#   - epel7
+#   - devtools7
+#   - python2RH7
+#   - python3RH7
+    - r_RH7
+    - r-studio-desktopRH7
+    - r-studio-serverRH7
+    - r-studio-server-configRH7
+    - r-shinyRH7
+    - r-shiny-configRH7
+
+  post_tasks:
+#   - name: remove RHEL7.5
+#     command:  "/usr/bin/subscription-manager remove --all"
+#   - name: unregister RHEL7.5
+#     command:  "/usr/bin/subscription-manager unregister"
+#   - name: clean RHEL7.5
+#     command:  "/usr/bin/subscription-manager clean"7
