@@ -152,7 +152,7 @@
   tags:
     - r
 - debug:
-    msg: "R dependencies {{ r_dependencies }}"
+    msg: "R dependencies {{ r_dependencies.stdout }}"
     
 - name: Find any locked directories
   find:
