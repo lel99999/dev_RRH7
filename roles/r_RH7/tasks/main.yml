@@ -141,12 +141,26 @@
 #   r_dependencies_flag: false
   yum:
     name: "{{ item }}"
-#    state: latest
+#   state: latest
     state: present
     disable_gpg_check: yes
     skip_broken: yes
-    exclude:  texlive-* texlive-texmf-xetex*
-  with_items: "{{ r_dependencies }}"
+#   exclude:  texlive-* texlive-texmf-xetex*
+# with_items: "{{ r_dependencies }}"
+  with_items:
+    - texlive-collection-xetex
+    - QuantLib
+    - QuantLib-devel
+    - libcurl-devel
+    - libxml2-devel
+    - hunspell-devel
+    - udunits2
+    - udunits2-devel
+  ## required for R Crypto
+    - openssl-devel
+    - protobuf-devel
+    - jq-devel
+    - zeromq-devel
   when: r_dependencies_flag
   register: r_dependencies
   tags:
