@@ -21,7 +21,10 @@
         msg: "RHEL Enabled Repos: {{ enabled_repos }}"
   tasks:
     - name: Install Development Tools
-      shell:  yum groupinstall "Development Tools" -y
+#     shell:  yum groupinstall "Development Tools" -y
+      yum:  
+        name: "@Development Tools"
+        state: present
 
   roles:
     - epel7
