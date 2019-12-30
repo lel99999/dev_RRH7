@@ -17,3 +17,5 @@
     - emacs-common-ess.noarch
     - emacs-ess.noarch
   when: custom_repo
+
+#https://github.com/emacs-ess/ESS
