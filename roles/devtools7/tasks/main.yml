@@ -33,6 +33,11 @@
     - git
   tags:
     - devtools7
+    
+- name: Set symlink to devtools-2 for compatibility
+  become: yes
+  become_method: sudo
+  shell: ln -s /opt/rh/devtoolset-7 /opt/rh/devtoolset-2
 
 #- name: Start using devtools
 #  become: yes
