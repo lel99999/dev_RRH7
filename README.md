@@ -12,5 +12,10 @@ $sudo yum install -y unixODBC-devel
 
 Default version of gcc on RHEL 7 (4.8.5) is too old to compile - full support for <codecvt> was added in gcc5 -- install a precompiled odbc binary
 from https://packagemanager.rstudio.com (built with newer gcc):
+
+$sudo yum install devtoolset-8 -y
+$scl enable devtoolset-8 bash
+$R
+
 >install.packages("odbc",repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")
 ```
