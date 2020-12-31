@@ -164,3 +164,7 @@ Test Installation:
 >library("OpenStreetMap")
 ```
 
+#### Check Upgrade for R
+```
+$sudo yum check-upgrade R
+```
