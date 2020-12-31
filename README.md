@@ -72,18 +72,23 @@ Install RPMs (proj, proj-devel,proj-epsg,proj-nad) last 2 contain all of the sup
 
 #### PostGIS on Postgresql 9.x
 Install dependencies:<br/>
-`yum install geos-devel.x86_64`<br/>
-`yum proj-devel.x86_64`<br/>
-`yum install gdal-devel.x86_64`<br/>
-`yum install libxml2-devel.x86_64`<br/>
-`yum install json-c-devel.x86_64`<br/>
+`$yum install geos-devel.x86_64`<br/>
+`$yum proj-devel.x86_64`<br/>
+`$yum proj-devel.x86_64`<br/>
+`$yum install gdal-devel.x86_64`<br/>
+`$yum install libxml2-devel.x86_64`<br/>
+`$yum install json-c-devel.x86_64`<br/>
 
-`wget https://download.osgeo.org/postgis/source/postgis-2.4.4.tar.gz`<br/>
-`tar xvzf postgis-2.4.4.tar.gz`<br/>
-`cd postgis-2.4.4`<br/>
-`./configure --with-pgconfig=/usr/pgsql-9.5/bin/pg_config`<br/>
-`make`<br/>
-`make install`<br/>
+`$wget https://download.osgeo.org/postgis/source/postgis-2.4.4.tar.gz`<br/>
+`$tar xvzf postgis-2.4.4.tar.gz`<br/>
+`$cd postgis-2.4.4`<br/>
+`$./configure --with-pgconfig=/usr/pgsql-9.5/bin/pg_config`<br/>
+`$make`<br/>
+`$sudo make install`<br/>
+
+#### Tidyverse
+`$sudo R -e "install.packages('tidyverse',contriburl='http://cran.rstudio.com/', dependencies = TRUE)"`<br/>
+![https://github.com/lel99999/dev_RRH7/blob/master/RStudio_tidyverse-01.png](https://github.com/lel99999/dev_RRH7/blob/master/RStudio_tidyverse-01.png)
 
 #### Add Openstreetmap
 **The osmar package provides infrastructure to access OpenStreetMap data from different sources to work with the data in common R manner**<br/>
