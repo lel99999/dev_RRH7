@@ -85,3 +85,77 @@ Install dependencies:<br/>
 `make`<br/>
 `make install`<br/>
 
+#### Add Openstreetmap
+**The osmar package provides infrastructure to access OpenStreetMap data from different sources to work with the data in common R manner**<br/>
+
+`$sudo R -e "install.packages('osmar',contriburl='http://cran.rstudio.com/', dependencies = TRUE)"`<br/>
+`>library("osmar")`<br/>
+
+#### RGDAL from Source
+[https://github.com/OSGeo/gdal](https://github.com/OSGeo/gdal)
+
+[https://trac.osgeo.org/gdal/wiki/DownloadSource](https://trac.osgeo.org/gdal/wiki/DownloadSource)
+
+##### RGDAL Errors for RHEL 7
+```
+$sudo R -e 'install.packages("rgdal",repo="http://r-forge.r-project.org")'
+or
+In R:
+>install.packages("rgdal",repo="http://http://r-forge.r-project.org")
+```
+Installation of package 'rgdal' had non-zero exit status <br/>
+Fix: check /<path>/gdal23/lib/libgdal.so.20 -> points to correct lib <br/>
+
+#### Updated RGDAL Version
+[https://github.com/OSGeo/gdal/releases](https://github.com/OSGeo/gdal/releases) <br/>
+
+ERROR: PROJ 6 symbols not found <br/>
+[https://download.osgeo.org/proj/](https://download.osgeo.org/proj/) <br/>
+
+ERROR: SQLITE3 library require => 3.11 <br/>
+FIX: <br/>
+```
+$locate sqlite3
+$export SQLITE3_LIBS=$SQLITE3_LIBS:/usr/sqlite330/lib
+```
+
+#### Updated Github Install
+```
+$sudo R -e 'devtools::install_github("CRAN/devtools")'
+$sudo R -e 'devtools::install_github("CRAN/OpenStreetMap")'
+```
+
+#### Updated OpenStreetMap Fix
+```
+Make sure pre-requisite SCL repo is enabled
+$sudo /usr/bin/subscription-manager repos --enable=rhel-server-rhscl-7-rpms 
+
+Add SCL devtoolset-8 for latest gcc on RHEL 7
+$sudo yum install -y devtoolset-8
+$scl --list
+$scl enable devtoolset-8 bash
+
+rgdal prerequisites:
+$sudo yum install -y gdal gdal-devel
+$sudo yum install -y proj-devel
+$sudo yum install -y proj-nad
+$sudo yum install -y proj-epsg
+
+$R
+>install.packages("rgdal")
+
+rJava prerequisites:
+$sudo yum install -y gcc-c++ gcc-gfortran R R-core R-core-devel R-devel R-java R-java-devel java-1.8.0-openjdk-devel
+
+Find libjvm.so (/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.275.b01-0.el7_9.x86_64/jre/lib/amd64/server/libjvm.so)
+$export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.275.b01-0.el7_9.x86_64/jre/lib/amd64/server/
+$R
+>install.packages("rJava")
+
+Once Dependencies are Met (rJava,rgdal)
+>install.packages("OpenStreetMap")
+
+Test Installation:
+>library("OpenStreetMap")
+```
+
