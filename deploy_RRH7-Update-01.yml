@@ -1,4 +1,5 @@
-- hosts: RRH7
+- hosts: research_environment
+#- hosts: RRH7
   #- hosts: wdcdev
   vars:
     custom_repo: true
