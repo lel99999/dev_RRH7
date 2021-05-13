@@ -88,7 +88,10 @@ Install dependencies:<br/>
 
 #### Tidyverse
 `$sudo R -e "install.packages('tidyverse',contriburl='http://cran.rstudio.com/', dependencies = TRUE)"`<br/>
-![https://github.com/lel99999/dev_RRH7/blob/master/RStudio_tidyverse-01.png](https://github.com/lel99999/dev_RRH7/blob/master/RStudio_tidyverse-01.png)
+![https://github.com/lel99999/dev_RRH7/blob/master/RStudio_tidyverse-01.png](https://github.com/lel99999/dev_RRH7/blob/master/RStudio_tidyverse-01.png) <br/>
+
+#### Updated Tidyverse from Source
+`$sudo R -e "install.packages('tidyverse', dependencies=TRUE, type="source", repos="https://cloud.r-project.org")"` <br/>
 
 #### Add Openstreetmap
 **The osmar package provides infrastructure to access OpenStreetMap data from different sources to work with the data in common R manner**<br/>
