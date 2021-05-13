@@ -178,3 +178,11 @@ $sudo yum whatprovides '*/package_name.sty'
 ```
 $sudo yum install texlive-multirow*
 ```
+
+#### Update tidyverse packages/dependencies
+```
+>install.packages(c("broom", "dbplyr", "dplyr", "dtplyr", "forcats", "ggplot2", 
+"googledrive", "googlesheets4", "haven", "hms", "httr", "jsonlite", 
+"lubridate", "magrittr", "modelr", "pillar", "purrr", "readr", 
+"reprex", "rlang", "rvest", "tibble", "tidyr", "xml2"))
+```
