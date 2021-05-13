@@ -186,3 +186,75 @@ $sudo yum install texlive-multirow*
 "lubridate", "magrittr", "modelr", "pillar", "purrr", "readr", 
 "reprex", "rlang", "rvest", "tibble", "tidyr", "xml2"))
 ```
+
+#### Function to check for dependencies for specific packages
+```
+instPkgPlusDeps <- function(pkg, install = FALSE,
+                            which = c("Depends", "Imports", "LinkingTo"),
+                            inc.pkg = TRUE) {
+  stopifnot(require("tools")) ## load tools
+  ap <- available.packages() ## takes a minute on first use
+  ## get dependencies for pkg recursively through all dependencies
+  deps <- package_dependencies(pkg, db = ap, which = which, recursive = TRUE)
+  ## the next line can generate warnings; I think these are harmless
+  ## returns the Priority field. `NA` indicates not Base or Recommended
+  pri <- sapply(deps[[1]], packageDescription, fields = "Priority")
+  ## filter out Base & Recommended pkgs - we want the `NA` entries
+  deps <- deps[[1]][is.na(pri)]
+  ## install pkg too?
+  if (inc.pkg) {
+    deps = c(pkg, deps)
+  }
+  ## are we installing?
+  if (install) {
+    install.packages(deps)
+  }
+  deps ## return dependencies
+}
+
+```
+
+Then just use funtion as follows in R/RStudio: <br/>
+```
+> instPkgPlusDeps("tidyverse")
+```
+
+#### Function to check if package is current
+```
+# Checks if a package is up-to-date. 
+isPackageCurrent = function(p,
+  ap=available.packages(),
+  ip=installed.packages(),
+  verbose=T) {
+
+    if(verbose) msg = function(...) cat("## ",...)
+    else msg = function(...) NULL;
+
+    aprow = match(p, ap[,"Package"]);
+    iprow = match(p, ip[,"Package"]);
+    if(!is.na(iprow) && (ip[iprow,"Priority"] %in% excl_prio)) {
+      msg("Package ",p," is a ",ip[iprow,"Priority"]," package\n");
+      return(T);
+    }
+    if(is.na(aprow)) {
+      stop("Couldn't find package ",p," among available packages");
+    }
+    if(is.na(iprow)) {
+      msg("Package ",p," is not currently installed, installing\n");
+      F;
+    } else {
+      iv = package_version(ip[iprow,"Version"]);
+      av = package_version(ap[aprow,"Version"]);
+      if(iv < av) {
+        msg("Package ",p," is out of date (",
+            as.character(iv),"<",as.character(av),")\n");
+        F;
+      } else {
+        msg("Package ",p," is up to date (",
+            as.character(iv),")\n");
+        T;
+      }
+    }
+}
+
+```
