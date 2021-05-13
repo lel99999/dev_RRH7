@@ -168,3 +168,13 @@ Test Installation:
 ```
 $sudo yum check-upgrade R
 ```
+
+#### Check for missing YUM packages that provide files
+```
+$sudo yum whatprovides '*/package_name.sty'
+```
+
+#### Address fix for missing multirow.sty
+```
+$sudo yum install texlive-multirow*
+```
