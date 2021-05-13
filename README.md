@@ -219,8 +219,81 @@ Then just use funtion as follows in R/RStudio: <br/>
 > instPkgPlusDeps("tidyverse")
 ```
 
-#### Function to check if package is current
+#### Function and utility to check if package is current
 ```
+library(tools)
+
+# Helper: a "functional" interface depth-first-search
+fdfs = function(get.children) {
+  rec = function(root) {
+    cs = get.children(root);
+    out = c();
+    for(c in cs) {
+      l = rec(c);
+      out = c(out, setdiff(l, out));
+    }
+    c(out, root);
+  }
+  rec
+}
+
+# Entries in the package "Priority" field which indicate the
+# package can't be upgraded. Not sure why we would exclude
+# recommended packages, since they can be upgraded...
+#excl_prio = c("base","recommended")
+excl_prio = c("base")
+
+# Find the non-"base" dependencies of a package.
+nonBaseDeps = function(packages,
+  ap=available.packages(),
+  ip=installed.packages(), recursive=T) {
+
+  stopifnot(is.character(packages));
+  all_deps = c();
+  for(p in packages) {
+    # Get package dependencies. Note we are ignoring version
+    # information
+    deps = package_dependencies(p, db = ap, recursive = recursive)[[1]];
+    ipdeps = match(deps,ip[,"Package"])
+    # We want dependencies which are either not installed, or not part
+    # of Base (e.g. not installed with R)
+    deps = deps[is.na(ipdeps) | !(ip[ipdeps,"Priority"] %in% excl_prio)];
+    # Now check that these are in the "available.packages()" database
+    apdeps = match(deps,ap[,"Package"])
+    notfound = is.na(apdeps)
+    if(any(notfound)) {
+      notfound=deps[notfound]
+      stop("Package ",p," has dependencies not in database: ",paste(notfound,collapse=" "));
+    }
+    all_deps = union(deps,all_deps);
+  }
+  all_deps
+}
+
+# Return a topologically-sorted list of dependencies for a given list
+# of packages. The output vector contains the "packages" argument, and
+# recursive dependencies, with each dependency occurring before any
+# package depending on it.
+packageOrderedDeps = function(packages, ap=available.packages()) {
+
+  # get ordered dependencies
+  odeps = sapply(packages,
+    fdfs(function(p){nonBaseDeps(p,ap=ap,recursive=F)}))
+  # "unique" preserves the order of its input
+  odeps = unique(unlist(odeps));
+
+  # sanity checks
+  stopifnot(length(setdiff(packages,odeps))==0);
+  seen = list();
+  for(d in odeps) {
+    ddeps = nonBaseDeps(d,ap=ap,recursive=F)
+    stopifnot(all(ddeps %in% seen));
+    seen = c(seen,d);
+  }
+
+  as.vector(odeps)
+}
+
 # Checks if a package is up-to-date. 
 isPackageCurrent = function(p,
   ap=available.packages(),
@@ -257,4 +330,42 @@ isPackageCurrent = function(p,
     }
 }
 
+# Like install.packages, but skips packages which are already
+# up-to-date. Specify dry_run=T to just see what would be done.
+installPackages =
+    function(packages,
+             ap=available.packages(), dry_run=F,
+             want_deps=T) {
+
+  stopifnot(is.character(packages));
+
+  ap=tools:::.remove_stale_dups(ap)
+  ip=installed.packages();
+  ip=tools:::.remove_stale_dups(ip)
+
+  if(want_deps) {
+    packages = packageOrderedDeps(packages, ap);
+  }
+
+  for(p in packages) {
+    curr = isPackageCurrent(p,ap,ip);
+    if(!curr) {
+      if(dry_run) {
+        cat("Would have installed package ",p,"\n");
+      } else {
+        install.packages(p,dependencies=F);
+      }
+    }
+  }
+}
+
+# Convenience function to make sure all the libraries we have loaded
+# in the current R session are up-to-date (and to update them if they
+# are not)
+updateAttachedLibraries = function(dry_run=F) {
+  s=search();
+  s=s[grep("^package:",s)];
+  s=gsub("^package:","",s)
+  installPackages(s,dry_run=dry_run);
+}
 ```
