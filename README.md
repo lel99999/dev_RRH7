@@ -380,3 +380,11 @@ updateAttachedLibraries = function(dry_run=F) {
 >data.df <- read_dta(url)
 >head(data.df)
 ```
+#### Install Tidyverse stable/development versions from CRAN/github
+```
+# Install from CRAN
+>install.packages("tidyverse")
+
+# Install development version from github
+>devtools::install_github("tidyverse/tidyverse")
+```
