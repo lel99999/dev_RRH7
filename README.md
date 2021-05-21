@@ -88,7 +88,10 @@ Install dependencies:<br/>
 
 #### Tidyverse
 `$sudo R -e "install.packages('tidyverse',contriburl='http://cran.rstudio.com/', dependencies = TRUE)"`<br/>
-![https://github.com/lel99999/dev_RRH7/blob/master/RStudio_tidyverse-01.png](https://github.com/lel99999/dev_RRH7/blob/master/RStudio_tidyverse-01.png)
+![https://github.com/lel99999/dev_RRH7/blob/master/RStudio_tidyverse-01.png](https://github.com/lel99999/dev_RRH7/blob/master/RStudio_tidyverse-01.png) <br/>
+
+#### Updated Tidyverse from Source
+`$sudo R -e "install.packages('tidyverse', dependencies=TRUE, type="source", repos="https://cloud.r-project.org")"` <br/>
 
 #### Add Openstreetmap
 **The osmar package provides infrastructure to access OpenStreetMap data from different sources to work with the data in common R manner**<br/>
@@ -177,4 +180,211 @@ $sudo yum whatprovides '*/package_name.sty'
 #### Address fix for missing multirow.sty
 ```
 $sudo yum install texlive-multirow*
+```
+
+#### Update tidyverse packages/dependencies
+```
+>install.packages(c("broom", "dbplyr", "dplyr", "dtplyr", "forcats", "ggplot2", 
+"googledrive", "googlesheets4", "haven", "hms", "httr", "jsonlite", 
+"lubridate", "magrittr", "modelr", "pillar", "purrr", "readr", 
+"reprex", "rlang", "rvest", "tibble", "tidyr", "xml2"))
+```
+
+#### Function to check for dependencies for specific packages
+```
+instPkgPlusDeps <- function(pkg, install = FALSE,
+                            which = c("Depends", "Imports", "LinkingTo"),
+                            inc.pkg = TRUE) {
+  stopifnot(require("tools")) ## load tools
+  ap <- available.packages() ## takes a minute on first use
+  ## get dependencies for pkg recursively through all dependencies
+  deps <- package_dependencies(pkg, db = ap, which = which, recursive = TRUE)
+  ## the next line can generate warnings; I think these are harmless
+  ## returns the Priority field. `NA` indicates not Base or Recommended
+  pri <- sapply(deps[[1]], packageDescription, fields = "Priority")
+  ## filter out Base & Recommended pkgs - we want the `NA` entries
+  deps <- deps[[1]][is.na(pri)]
+  ## install pkg too?
+  if (inc.pkg) {
+    deps = c(pkg, deps)
+  }
+  ## are we installing?
+  if (install) {
+    install.packages(deps)
+  }
+  deps ## return dependencies
+}
+
+```
+
+Then just use funtion as follows in R/RStudio: <br/>
+```
+> instPkgPlusDeps("tidyverse")
+```
+
+#### Function and utility to check if package is current
+```
+library(tools)
+
+# Helper: a "functional" interface depth-first-search
+fdfs = function(get.children) {
+  rec = function(root) {
+    cs = get.children(root);
+    out = c();
+    for(c in cs) {
+      l = rec(c);
+      out = c(out, setdiff(l, out));
+    }
+    c(out, root);
+  }
+  rec
+}
+
+# Entries in the package "Priority" field which indicate the
+# package can't be upgraded. Not sure why we would exclude
+# recommended packages, since they can be upgraded...
+#excl_prio = c("base","recommended")
+excl_prio = c("base")
+
+# Find the non-"base" dependencies of a package.
+nonBaseDeps = function(packages,
+  ap=available.packages(),
+  ip=installed.packages(), recursive=T) {
+
+  stopifnot(is.character(packages));
+  all_deps = c();
+  for(p in packages) {
+    # Get package dependencies. Note we are ignoring version
+    # information
+    deps = package_dependencies(p, db = ap, recursive = recursive)[[1]];
+    ipdeps = match(deps,ip[,"Package"])
+    # We want dependencies which are either not installed, or not part
+    # of Base (e.g. not installed with R)
+    deps = deps[is.na(ipdeps) | !(ip[ipdeps,"Priority"] %in% excl_prio)];
+    # Now check that these are in the "available.packages()" database
+    apdeps = match(deps,ap[,"Package"])
+    notfound = is.na(apdeps)
+    if(any(notfound)) {
+      notfound=deps[notfound]
+      stop("Package ",p," has dependencies not in database: ",paste(notfound,collapse=" "));
+    }
+    all_deps = union(deps,all_deps);
+  }
+  all_deps
+}
+
+# Return a topologically-sorted list of dependencies for a given list
+# of packages. The output vector contains the "packages" argument, and
+# recursive dependencies, with each dependency occurring before any
+# package depending on it.
+packageOrderedDeps = function(packages, ap=available.packages()) {
+
+  # get ordered dependencies
+  odeps = sapply(packages,
+    fdfs(function(p){nonBaseDeps(p,ap=ap,recursive=F)}))
+  # "unique" preserves the order of its input
+  odeps = unique(unlist(odeps));
+
+  # sanity checks
+  stopifnot(length(setdiff(packages,odeps))==0);
+  seen = list();
+  for(d in odeps) {
+    ddeps = nonBaseDeps(d,ap=ap,recursive=F)
+    stopifnot(all(ddeps %in% seen));
+    seen = c(seen,d);
+  }
+
+  as.vector(odeps)
+}
+
+# Checks if a package is up-to-date. 
+isPackageCurrent = function(p,
+  ap=available.packages(),
+  ip=installed.packages(),
+  verbose=T) {
+
+    if(verbose) msg = function(...) cat("## ",...)
+    else msg = function(...) NULL;
+
+    aprow = match(p, ap[,"Package"]);
+    iprow = match(p, ip[,"Package"]);
+    if(!is.na(iprow) && (ip[iprow,"Priority"] %in% excl_prio)) {
+      msg("Package ",p," is a ",ip[iprow,"Priority"]," package\n");
+      return(T);
+    }
+    if(is.na(aprow)) {
+      stop("Couldn't find package ",p," among available packages");
+    }
+    if(is.na(iprow)) {
+      msg("Package ",p," is not currently installed, installing\n");
+      F;
+    } else {
+      iv = package_version(ip[iprow,"Version"]);
+      av = package_version(ap[aprow,"Version"]);
+      if(iv < av) {
+        msg("Package ",p," is out of date (",
+            as.character(iv),"<",as.character(av),")\n");
+        F;
+      } else {
+        msg("Package ",p," is up to date (",
+            as.character(iv),")\n");
+        T;
+      }
+    }
+}
+
+# Like install.packages, but skips packages which are already
+# up-to-date. Specify dry_run=T to just see what would be done.
+installPackages =
+    function(packages,
+             ap=available.packages(), dry_run=F,
+             want_deps=T) {
+
+  stopifnot(is.character(packages));
+
+  ap=tools:::.remove_stale_dups(ap)
+  ip=installed.packages();
+  ip=tools:::.remove_stale_dups(ip)
+
+  if(want_deps) {
+    packages = packageOrderedDeps(packages, ap);
+  }
+
+  for(p in packages) {
+    curr = isPackageCurrent(p,ap,ip);
+    if(!curr) {
+      if(dry_run) {
+        cat("Would have installed package ",p,"\n");
+      } else {
+        install.packages(p,dependencies=F);
+      }
+    }
+  }
+}
+
+# Convenience function to make sure all the libraries we have loaded
+# in the current R session are up-to-date (and to update them if they
+# are not)
+updateAttachedLibraries = function(dry_run=F) {
+  s=search();
+  s=s[grep("^package:",s)];
+  s=gsub("^package:","",s)
+  installPackages(s,dry_run=dry_run);
+}
+```
+#### Test haven::read_dta() which is a library for R to read Stata files
+```
+>library(haven)
+>url <- "http://www.principlesofeconometrics.com/stata/broiler.dta"
+>
+>data.df <- read_dta(url)
+>head(data.df)
+```
+#### Install Tidyverse stable/development versions from CRAN/github
+```
+# Install from CRAN
+>install.packages("tidyverse")
+
+# Install development version from github
+>devtools::install_github("tidyverse/tidyverse")
 ```
