@@ -41,6 +41,31 @@
 #       name: "@Development Tools"
 #       state: present
 
+    - name: Update R Devtools
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items:
+        - sf
+        - units
+        - devtools
+      register: r_result
+      failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+      changed_when: "'Added' in r_result.stdout"
+#      environment: "{{ r_env_vars }}"
+      tags:
+        - r Devtools
+
+    - name: Add rJava and Dependencies
+      yum:
+        name: java-1.8.0-openjdk-devel
+
+    - name: Run R Java Config
+      shell: R CD javareconf
+
+    - name: Add RSQLServer Package
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items:
+        - rJava
+        - RSQLServer
   roles:
 #   - epel7
 #   - emacsRH7
