@@ -432,3 +432,10 @@ $sudo R -e 'install.packages("sf",repo="https://CRAN.R-project.org")'
 $sudo R -e 'install.packages("tidycensus",repo="https://CRAN.R-project.org")'
 ```
             
+#### Stringi & Stringr Package Install Notes
+Resource Links: <br/>
+- [https://support.rstudio.com/hc/en-us/articles/360039462714-Installing-stringi-in-air-gapped-offline-environments](https://support.rstudio.com/hc/en-us/articles/360039462714-Installing-stringi-in-air-gapped-offline-environments) <br/>
+- [https://stringi.gagolewski.com/install.html](https://stringi.gagolewski.com/install.html) <br/>
+- [https://github.com/gagolews/stringi/issues/170]() <br/>
+
+
