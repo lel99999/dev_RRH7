@@ -438,4 +438,10 @@ Resource Links: <br/>
 - [https://stringi.gagolewski.com/install.html](https://stringi.gagolewski.com/install.html) <br/>
 - [https://github.com/gagolews/stringi/issues/170]() <br/>
 
+##### ICU >= 55 Notes for RHEL 7.x
+- [https://icu.unicode.org/download](https://icu.unicode.org/download) <br/>
+- [https://github.com/gagolews/stringi/issues/170](https://github.com/gagolews/stringi/issues/170) <br/>
+
+
+
 
