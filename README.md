@@ -1,6 +1,11 @@
 # dev_RRH7
 Out of band R dev for RHEL7
 
+#### Running RStudio
+```
+$ssh -Y <host> QMLSCENE_DEVICE=software rstudio
+```
+
 #### Install ODBC 
 ```
 >install.packages("DBI")
