@@ -1135,7 +1135,7 @@ python_packages:
   #- setools # RPMs
   #- SimpleDialog # tkinter
   - slip
-  - pysmbclient 
+  - pysmbclient
   #- pysmbc # replaced by pysmbclient
   #- snack # tkinter
   #- sos # RPM
@@ -1351,4 +1351,3 @@ db_automation_custom_packages:
    - rhobot
 #  - drake
 #  - hammerdb
-
