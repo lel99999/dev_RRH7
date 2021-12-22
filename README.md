@@ -436,6 +436,15 @@ $sudo cp /usr/local/lib/libminizip* /lib64/
 $sudo R -e 'install.packages("sf",repo="https://CRAN.R-project.org")'
 $sudo R -e 'install.packages("tidycensus",repo="https://CRAN.R-project.org")'
 ```
+#### R Postgresql Code
+```
+>con1 <- dbConnect(RPostgres::Postgres(),dbname = '<dbname>', host = '<hostname>', port = '5432', user = '<username>', password = '*****')
+> query1 <- dbSendQuery(con1,'SELECT * from <table>;')
+> dbFetch(query1)
+
+```
+
+
             
 #### Stringi & Stringr Package Install Notes
 Resource Links: <br/>
