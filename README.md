@@ -456,6 +456,8 @@ Resource Links: <br/>
 - [https://icu.unicode.org/download](https://icu.unicode.org/download) <br/>
 - [https://github.com/gagolews/stringi/issues/170](https://github.com/gagolews/stringi/issues/170) <br/>
 
-
+#### RStudio XWindows Hangs Resolution and Notes
+- rm/bkp .rstudio
+- review .RData/.Rprofile/.Rhistory
 
 

@@ -1,6 +1,7 @@
 - hosts: RRH7
   #- hosts: wdcdev
   vars:
+    envir: dev.local
     custom_repo: true
   vars_files:
     - ~/RHACCOUNT
