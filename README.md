@@ -444,7 +444,12 @@ $sudo R -e 'install.packages("tidycensus",repo="https://CRAN.R-project.org")'
 
 ```
 
-
+#### R ODBC Code
+```
+>con1 <- DBI::dbConnect(odbc::odbc(),dsn='<dsn_name>',uid='<uid>',pwd='*****')
+>query1 <- dbSendQuery(con1,'SELECT * from db.<table>;')
+>dbFetch(query1)
+```
             
 #### Stringi & Stringr Package Install Notes
 Resource Links: <br/>
