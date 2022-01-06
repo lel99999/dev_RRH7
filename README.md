@@ -465,4 +465,5 @@ Resource Links: <br/>
 - rm/bkp .rstudio
 - review .RData/.Rprofile/.Rhistory
 
-
+#### R/RStudio Session "hadabend" Errors
+- "hadabend" Errors caused by .rstudio restoring past sessions
