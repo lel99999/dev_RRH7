@@ -467,3 +467,8 @@ Resource Links: <br/>
 
 #### R/RStudio Session "hadabend" Errors
 - "hadabend" Errors caused by .rstudio restoring past sessions
+- Fix (for some situations)
+```
+$mv ~/.rstudio ~./rstudio.bkp
+## Restart RStudio
+```
