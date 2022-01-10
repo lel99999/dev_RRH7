@@ -467,3 +467,7 @@ Resource Links: <br/>
 
 #### R/RStudio Session "hadabend" Errors
 - "hadabend" Errors caused by .rstudio restoring past sessions
+
+#### R Version Management (Similar to Pyenv) to Run Different versions of R side-by-side
+- Renv
+  [https://github.com/viking/Renv](https://github.com/viking/Renv) <br/>
