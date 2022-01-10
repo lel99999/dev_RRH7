@@ -467,15 +467,18 @@ Resource Links: <br/>
 
 #### R/RStudio Session "hadabend" Errors
 - "hadabend" Errors caused by .rstudio restoring past sessions
-<<<<<<< HEAD
+  - Fix (for some situations)
+  ```
+  $mv ~/.rstudio ~./rstudio.bkp
+  ## Restart RStudio
+  ```
 
 #### R Version Management (Similar to Pyenv) to Run Different versions of R side-by-side
 - Renv
   [https://github.com/viking/Renv](https://github.com/viking/Renv) <br/>
-=======
-- Fix (for some situations)
-```
-$mv ~/.rstudio ~./rstudio.bkp
-## Restart RStudio
-```
->>>>>>> 0df89243b282210570138737efd36adf912ac671
+
+#### Override which versions of R is used setting environment variable RSTUDIO_WHICH_R
+- Setting Environment Variable
+  ```
+  $export RSTUDIO_WHICH_R=/usr/local/bin/R
+  ```
