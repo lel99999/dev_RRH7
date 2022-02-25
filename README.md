@@ -472,7 +472,13 @@ Resource Links: <br/>
   $mv ~/.rstudio ~./rstudio.bkp
   ## Restart RStudio
   ```
-
+#### R Upgrade RHEL 7 (v3.5 to v3.6)
+```
+$sudo yum list installed R-*
+$sudo yum install R R-devel R-java R-java-devel R-core
+```
+![https://github.com/lel99999/dev_RRH7/blob/master/R-Pkgs-01.PNG](https://github.com/lel99999/dev_RRH7/blob/master/R-Pkgs-01.PNG) <br/>
+            
 #### R Version Management (Similar to Pyenv) to Run Different versions of R side-by-side
 - Renv
   [https://github.com/viking/Renv](https://github.com/viking/Renv) <br/>
