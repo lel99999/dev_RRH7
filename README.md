@@ -482,3 +482,12 @@ Resource Links: <br/>
   ```
   $export RSTUDIO_WHICH_R=/usr/local/bin/R
   ```
+#### R Spark Integration
+- Install sparklyr, dplyr, base64enc
+  ```
+  $sudo R -e "install.packages('bslib',repos='https://cran.rstudio.com')"
+  $sudo R -e "install.packages('r2d3',repos='https://cran.rstudio.com')"
+  $sudo R -e "install.packages('jsonlite',repos='https://cran.rstudio.com',dep=TRUE)"
+  $sudo R -e "install.packages('arrow',repos='https://cran.rstudio.com')"
+  $sudo R -e "install.packages('sparklyr',repos='https://cran.rstudio.com',dep=TRUE)"
+  ```
