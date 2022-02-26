@@ -497,3 +497,18 @@ $sudo yum install R R-devel R-java R-java-devel R-core
   $sudo R -e "install.packages('arrow',repos='https://cran.rstudio.com')"
   $sudo R -e "install.packages('sparklyr',repos='https://cran.rstudio.com',dep=TRUE)"
   ```
+
+#### Check and set .libPaths() in R
+- check .libPaths() <br/>
+  in R <br/>
+  ```
+  >.libPaths()
+  [1] "/home/<user>/R/libraries
+  [2] "/usr/lib64/R/library"
+  >
+  ```
+- Set .libPaths() <br/>
+  in .bash_profile add <br/>
+  ```
+  export R_LIBS_USER=/usr/lib64/R/library
+  ```
