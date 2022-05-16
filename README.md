@@ -512,3 +512,7 @@ $sudo yum install R R-devel R-java R-java-devel R-core
   ```
   export R_LIBS_USER=/usr/lib64/R/library
   ```
+            
+#### Update rgdal installation notes on RHEL 7
+- install gdal34, gdal34-devel, gdal34-libs, gdal34-python-tools, gdal34-python3
+  `$sudo yum install gdal34 gdal34-devel gdal34-libs gdal34-python-tools gdal34-python3` <br/>
