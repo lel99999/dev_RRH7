@@ -516,3 +516,7 @@ $sudo yum install R R-devel R-java R-java-devel R-core
 #### Update rgdal installation notes on RHEL 7
 - install gdal34, gdal34-devel, gdal34-libs, gdal34-python-tools, gdal34-python3
   `$sudo yum install gdal34 gdal34-devel gdal34-libs gdal34-python-tools gdal34-python3` <br/>
+- install expat*, proj*
+  `$sudo yum install expat* proj*` <br/>
+- install rgdal
+  `$sudo R -e "install.packages('rgdal')"` <br/>
