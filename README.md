@@ -519,4 +519,4 @@ $sudo yum install R R-devel R-java R-java-devel R-core
 - install expat*, proj*
   `$sudo yum install expat* proj*` <br/>
 - install rgdal
-  `$sudo R -e "install.packages('rgdal')"` <br/>
+  `$sudo R -e "install.packages('rgdal', repos='https://cloud.r-project.org/')"` <br/>
