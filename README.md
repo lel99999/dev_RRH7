@@ -524,3 +524,8 @@ $sudo yum install R R-devel R-java R-java-devel R-core
   `$sudo R -e "install.packages('devtools', repos='https://cloud.r-project.org/')"` <br/>
   ![devtools dependencies](https://github.com/lel99999/dev_RRH7/blob/master/devtools_dependencies-01.PNG) <br/>
 - install devtools additional dependencies via yum (libcurl-devel, libxml2-devel)
+
+#### Updated Notes for RSQLServer
+- install devtools, RSQLServer
+  `$sudo R -e 'devtools::install_github("imanuelcostigan/RSQLServer")'` <br/>
+
