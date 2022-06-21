@@ -525,10 +525,14 @@ $sudo yum install R R-devel R-java R-java-devel R-core
   ![devtools dependencies](https://github.com/lel99999/dev_RRH7/blob/master/devtools_dependencies-01.PNG) <br/>
 - install devtools additional dependencies via yum (libcurl-devel, libxml2-devel)
 
-#### Updated Notes for RSQLServer
+#### Updated Notes for RSQLServer, rJAVA
 - install devtools, RSQLServer
   `$sudo R -e 'devtools::install_github("imanuelcostigan/RSQLServer")'` <br/>
 - install rJava
   `$sudo R -e 'install.packages("rJava",repos="http://cloud.r-project.org")'` <br/>
+- install tidyverse dependencies
+  `$sudo R -e 'install.packages(c("broom", "dbplyr", "dplyr", "dtplyr", "forcats", "ggplot2", "googledrive", "googlesheets4", "haven", "hms", "httr", "jsonlite", "lubridate", "magrittr", "modelr", "pillar", "purrr", "readr", "reprex", "rlang", "rvest", "tibble", "tidyr", "xml2"), repos="http://cloud.r-project.org")'` <br/>
+- install tidyverse
+  `$sudo R -e 'install.packages("tidyverse",repos="http://cloud.r-project.org")'` <br/>
 
 
