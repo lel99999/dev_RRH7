@@ -534,5 +534,6 @@ $sudo yum install R R-devel R-java R-java-devel R-core
   `$sudo R -e 'install.packages(c("broom", "dbplyr", "dplyr", "dtplyr", "forcats", "ggplot2", "googledrive", "googlesheets4", "haven", "hms", "httr", "jsonlite", "lubridate", "magrittr", "modelr", "pillar", "purrr", "readr", "reprex", "rlang", "rvest", "tibble", "tidyr", "xml2"), repos="http://cloud.r-project.org")'` <br/>
 - install tidyverse
   `$sudo R -e 'install.packages("tidyverse",repos="http://cloud.r-project.org")'` <br/>
-
+- tidyverse conflicts (which are deliberately ignored) - [ https://tidyverse.tidyverse.org/reference/tidyverse_conflicts.html](https://tidyverse.tidyverse.org/reference/tidyverse_conflicts.html) <br/>
+  ![tidyverse conflicts](https://github.com/lel99999/dev_RRH7/blob/master/tidyverse_conflicts-01.PNG) <br/>
 
