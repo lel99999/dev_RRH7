@@ -528,4 +528,7 @@ $sudo yum install R R-devel R-java R-java-devel R-core
 #### Updated Notes for RSQLServer
 - install devtools, RSQLServer
   `$sudo R -e 'devtools::install_github("imanuelcostigan/RSQLServer")'` <br/>
+- install rJava
+  `$sudo R -e 'install.packages("rJava",repos="http://cloud.r-project.org")'` <br/>
+
 
