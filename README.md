@@ -542,3 +542,8 @@ $sudo yum install R R-devel R-java R-java-devel R-core
   `$sudo dnf install gdal-devel proj-devel geos-devel sqlite-devel udunits2-devel` <br/>
   `$sudo R -e 'install.packages("sf",repos="http://cloud.r-project.org")'` <br/>
 
+- XWindows Needed for Desktop
+  `$sudo yum groupinstall "Server with GUI"` <br/>
+  `$sudo yum groupinstall "Xfce"` <br/>
+  `$sudo systemctl set-default graphical.target` <br/>
+  
