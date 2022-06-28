@@ -537,3 +537,8 @@ $sudo yum install R R-devel R-java R-java-devel R-core
 - tidyverse conflicts (which are deliberately ignored) - [ https://tidyverse.tidyverse.org/reference/tidyverse_conflicts.html](https://tidyverse.tidyverse.org/reference/tidyverse_conflicts.html) <br/>
   ![tidyverse conflicts](https://github.com/lel99999/dev_RRH7/blob/master/tidyverse_conflicts-01.PNG) <br/>
 
+- install sf
+  `$sudo yum install dnf` <br/>
+  `$sudo dnf install gdal-devel proj-devel geos-devel sqlite-devel udunits2-devel` <br/>
+  `$sudo R -e 'install.packages("sf",repos="http://cloud.r-project.org")'` <br/>
+
