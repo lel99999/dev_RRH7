@@ -547,3 +547,5 @@ $sudo yum install R R-devel R-java R-java-devel R-core
   `$sudo yum groupinstall "Xfce"` <br/>
   `$sudo systemctl set-default graphical.target` <br/>
   
+#### Scripting and Command-line frontend for R (littler)
+- [http://dirk.eddelbuettel.com/code/littler.html](http://dirk.eddelbuettel.com/code/littler.html) <br/>
