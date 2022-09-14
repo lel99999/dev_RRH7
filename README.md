@@ -582,6 +582,7 @@ $sudo yum install R R-devel R-java R-java-devel R-core
 $sudo R -e 'install.packages("Rcpp", repos="https://RcppCore.github.io/drat")'
 ```
 #### Install rstan on RHEL 7.9
+- [https://mc-stan.org/](https://mc-stan.org/) <br/>
 - [https://github.com/stan-dev/rstan](https://github.com/stan-dev/rstan) <br/>
 - Using >= devtoolset-7
   ```
