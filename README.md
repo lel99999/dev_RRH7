@@ -576,3 +576,8 @@ $sudo yum install R R-devel R-java R-java-devel R-core
 
   $export SQLITE3_LIBS="-L/usr/lib -lsqlite3"
   ```
+
+#### Update Rcpp
+```
+$sudo R -e 'install.packages("Rcpp", repos="https://RcppCore.github.io/drat")'
+```
