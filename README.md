@@ -1,6 +1,7 @@
 # dev_RRH7
 Out of band R dev for RHEL7
 
+#### Updated to v2022.07.1-554
 #### Running RStudio
 ```
 $ssh -Y <host> QMLSCENE_DEVICE=software rstudio
