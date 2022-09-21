@@ -436,6 +436,20 @@ $sudo cp /usr/local/lib/libminizip* /lib64/
 $sudo R -e 'install.packages("sf",repo="https://CRAN.R-project.org")'
 $sudo R -e 'install.packages("tidycensus",repo="https://CRAN.R-project.org")'
 ```
+#### R Postgresql Code
+```
+>con1 <- dbConnect(RPostgres::Postgres(),dbname = '<dbname>', host = '<hostname>', port = '5432', user = '<username>', password = '*****')
+> query1 <- dbSendQuery(con1,'SELECT * from <table>;')
+> dbFetch(query1)
+
+```
+
+#### R ODBC Code
+```
+>con1 <- DBI::dbConnect(odbc::odbc(),dsn='<dsn_name>',uid='<uid>',pwd='*****')
+>query1 <- dbSendQuery(con1,'SELECT * from db.<table>;')
+>dbFetch(query1)
+```
             
 #### Stringi & Stringr Package Install Notes
 Resource Links: <br/>
@@ -451,4 +465,135 @@ Resource Links: <br/>
 - rm/bkp .rstudio
 - review .RData/.Rprofile/.Rhistory
 
+#### R/RStudio Session "hadabend" Errors
+- "hadabend" Errors caused by .rstudio restoring past sessions
+  - Fix (for some situations)
+  ```
+  $mv ~/.rstudio ~./rstudio.bkp
+  ## Restart RStudio
+  ```
+#### R Upgrade RHEL 7 (v3.5 to v3.6)
+```
+$sudo yum list installed R-*
+$sudo yum install R R-devel R-java R-java-devel R-core
+```
+![https://github.com/lel99999/dev_RRH7/blob/master/R-Pkgs-01.PNG](https://github.com/lel99999/dev_RRH7/blob/master/R-Pkgs-01.PNG) <br/>
+            
+#### R Version Management (Similar to Pyenv) to Run Different versions of R side-by-side
+- Renv
+  [https://github.com/viking/Renv](https://github.com/viking/Renv) <br/>
 
+#### Override which versions of R is used setting environment variable RSTUDIO_WHICH_R
+- Setting Environment Variable
+  ```
+  $export RSTUDIO_WHICH_R=/usr/local/bin/R
+  ```
+#### R Spark Integration
+- Install sparklyr, dplyr, base64enc
+  ```
+  $sudo R -e "install.packages('bslib',repos='https://cran.rstudio.com')"
+  $sudo R -e "install.packages('r2d3',repos='https://cran.rstudio.com')"
+  $sudo R -e "install.packages('jsonlite',repos='https://cran.rstudio.com',dep=TRUE)"
+  $sudo R -e "install.packages('arrow',repos='https://cran.rstudio.com')"
+  $sudo R -e "install.packages('sparklyr',repos='https://cran.rstudio.com',dep=TRUE)"
+  ```
+
+#### Check and set .libPaths() in R
+- check .libPaths() <br/>
+  in R <br/>
+  ```
+  >.libPaths()
+  [1] "/home/<user>/R/libraries
+  [2] "/usr/lib64/R/library"
+  >
+  ```
+- Set .libPaths() <br/>
+  in .bash_profile add <br/>
+  ```
+  export R_LIBS_USER=/usr/lib64/R/library
+  ```
+            
+#### Update rgdal installation notes on RHEL 7
+- install gdal34, gdal34-devel, gdal34-libs, gdal34-python-tools, gdal34-python3
+  `$sudo yum install gdal34 gdal34-devel gdal34-libs gdal34-python-tools gdal34-python3` <br/>
+- install expat*, proj*
+  `$sudo yum install expat* proj*` <br/>
+- install rgdal
+  `$sudo R -e "install.packages('rgdal', repos='https://cloud.r-project.org/')"` <br/>
+- install devtools
+  `$sudo R -e "install.packages('devtools', repos='https://cloud.r-project.org/')"` <br/>
+  ![devtools dependencies](https://github.com/lel99999/dev_RRH7/blob/master/devtools_dependencies-01.PNG) <br/>
+- install devtools additional dependencies via yum (libcurl-devel, libxml2-devel, openssl*-devel)
+
+#### Updated Notes for RSQLServer, rJAVA
+- install devtools, RSQLServer
+  `$sudo R -e 'devtools::install_github("imanuelcostigan/RSQLServer")'` <br/>
+- install rJava
+  `$sudo R -e 'install.packages("rJava",repos="http://cloud.r-project.org")'` <br/>
+- install tidyverse dependencies
+  `$sudo R -e 'install.packages(c("broom", "dbplyr", "dplyr", "dtplyr", "forcats", "ggplot2", "googledrive", "googlesheets4", "haven", "hms", "httr", "jsonlite", "lubridate", "magrittr", "modelr", "pillar", "purrr", "readr", "reprex", "rlang", "rvest", "tibble", "tidyr", "xml2"), repos="http://cloud.r-project.org")'` <br/>
+- install tidyverse
+  `$sudo R -e 'install.packages("tidyverse",repos="http://cloud.r-project.org")'` <br/>
+- tidyverse conflicts (which are deliberately ignored) - [ https://tidyverse.tidyverse.org/reference/tidyverse_conflicts.html](https://tidyverse.tidyverse.org/reference/tidyverse_conflicts.html) <br/>
+  ![tidyverse conflicts](https://github.com/lel99999/dev_RRH7/blob/master/tidyverse_conflicts-01.PNG) <br/>
+
+- install sf
+  `$sudo yum install dnf` <br/>
+  `$sudo dnf install gdal-devel proj-devel geos-devel sqlite-devel udunits2-devel` <br/>
+  `$sudo R -e 'install.packages("sf",repos="http://cloud.r-project.org")'` <br/>
+
+- XWindows Needed for Desktop
+  `$sudo yum groupinstall "Server with GUI"` <br/>
+  `$sudo yum groupinstall "Xfce"` <br/>
+  `$sudo systemctl set-default graphical.target` <br/>
+  
+#### Scripting and Command-line frontend for R (littler)
+- [http://dirk.eddelbuettel.com/code/littler.html](http://dirk.eddelbuettel.com/code/littler.html) <br/>
+            
+#### Install lwgeom
+- [https://cran.r-project.org/web/packages/lwgeom/lwgeom.pdf](https://cran.r-project.org/web/packages/lwgeom/lwgeom.pdf) <br/>
+  ```
+  $sudo R -e 'install.packages("lwgeom",repos="https://cran.r-project.org")'
+  ```
+
+#### Build geos geos-devel from source
+- [https://cmake.org/download/](https://cmake.org/download/) <br/>
+- [https://libgeos.org/usage/download/](https://libgeos.org/usage/download/) <br/>
+
+#### Use Doxygen for API Documentation
+- [https://www.doxygen.nl/](https://www.doxygen.nl/) <br/>
+
+#### Updating PROJ -> 6.2.x and SQLite -> 3.11.x for RHEL7
+- [http://sqlite.org/2016/sqlite-autoconf-3110000.tar.gz](http://sqlite.org/2016/sqlite-autoconf-3110000.tar.gz) <br/>
+  ```
+  $./configure --prefix=/usr --disable-static        \
+            CFLAGS="-g -O2 -DSQLITE_ENABLE_FTS3=1 \
+            -DSQLITE_ENABLE_COLUMN_METADATA=1     \
+            -DSQLITE_ENABLE_UNLOCK_NOTIFY=1       \
+            -DSQLITE_SECURE_DELETE=1              \
+            -DSQLITE_ENABLE_DBSTAT_VTAB=1" && make -j1
+
+
+  $export SQLITE3_LIBS="-L/usr/lib -lsqlite3"
+  ```
+
+#### Update Rcpp
+```
+$sudo R -e 'install.packages("Rcpp", repos="https://RcppCore.github.io/drat")'
+```
+#### Install rstan on RHEL 7.9
+- [https://mc-stan.org/](https://mc-stan.org/) <br/>
+- [https://github.com/stan-dev/rstan](https://github.com/stan-dev/rstan) <br/>
+- Using >= devtoolset-7
+  ```
+  $scl enable devtoolset-7 bash
+  ```
+- ERROR: C++14 standard requested but CXX14 is not defined <br/>
+  - FIX:  Update R_Makevars add below
+  ```
+  ## C++ flags
+  CXX=g++
+  CXX11=g++
+  CXX14=g++
+  CXX17=g++
+  ```
