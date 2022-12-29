@@ -7,6 +7,12 @@ Out of band R dev for RHEL7
 $ssh -Y <host> QMLSCENE_DEVICE=software rstudio
 ```
 
+#### Install rJava, JDBC
+```
+>install.packages(c("rJava","RJDBC"))
+
+```
+
 #### Install ODBC 
 ```
 >install.packages("DBI")
