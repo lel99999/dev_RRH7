@@ -2,6 +2,10 @@
 Notes and Workspace for R Administration and Development for RHEL7
 
 #### R v4.x
+- Latest 4.3.1 RPMs (https://dl.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/r/) <br/>
+
+![https://github.com/lel99999/dev_RRH7/blob/master/R_4.3.1_list.png](https://github.com/lel99999/dev_RRH7/blob/master/R_4.3.1_list.png) <br/>
+
 ```
 .libPaths()
 #> [1] "/home/<user>/R/x86_64-redhat-linux-gnu-library/4.0"
