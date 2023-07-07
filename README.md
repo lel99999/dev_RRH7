@@ -1,5 +1,14 @@
 # dev_RRH7
-Out of band R dev for RHEL7
+Notes and Workspace for R Administration and Development for RHEL7
+
+#### R v4.x
+```
+.libPaths()
+#> [1] "/home/<user>/R/x86_64-redhat-linux-gnu-library/4.0"
+#> [2] "/usr/local/lib/R/library"
+#> [3] "/usr/lib64/R/library"
+#> [4] "/usr/share/R/library"
+```
 
 #### Updated to v2022.07.1-554
 #### Running RStudio
