@@ -105,6 +105,13 @@ wget http://download.osgeo.org/gdal/2.2.3/gdal-2.2.3.tar.gz<br/>
   - cmake <br/>
   - Will get errors GDALAllRegister not found in libgdal <br/>
 
+#### GDAL 3.0.4 Error jpeg2000
+```
+$sudo make clean
+$ ./configure --with-libtiff=internal --with-geotiff=internal --with-jpeg=internal --with-jpeg12
+$sudo make install
+```
+
 #### Shared library error
 Add /usr/local/lib to e.g. /etc/ld.so.conf.d/libgdal-x86_64.conf<br/>
 Run ldconfig<br/>
