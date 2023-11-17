@@ -98,6 +98,13 @@ wget http://download.osgeo.org/gdal/2.2.3/gdal-2.2.3.tar.gz<br/>
 `$make`<br/>
 `$sudo make install`<br/>
 
+#### GDAL 3.0.4 for RHEL 8.x 
+- [https://download.osgeo.org/gdal/3.0.4/](https://download.osgeo.org/gdal/3.0.4/) <br/>
+
+- NOTES:  GDAL v3.7.3 on RHEL 8 requires: <br/>
+  - cmake <br/>
+  - Will get errors GDALAllRegister not found in libgdal <br/>
+
 #### Shared library error
 Add /usr/local/lib to e.g. /etc/ld.so.conf.d/libgdal-x86_64.conf<br/>
 Run ldconfig<br/>
