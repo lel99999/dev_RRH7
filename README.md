@@ -72,6 +72,11 @@ $R
 >install.packages("odbc",repos="https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")
 ```
 
+#### Install ODBC Error Fix (R v3.6.0): nanodbc/nanodbc.cpp:47:19: fatal error: codecvt: No such file or directory
+```
+>devtools::install_version('odbc', '1.2.2', repos='https://cran.rstudio.com/')
+```
+
 #### Update R packages from list
 `updpackages <- function(pkg){
             new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
