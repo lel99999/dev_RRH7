@@ -46,6 +46,13 @@ require(devtools)
 install_version("RODBC", version = "1.3-16")
 ```
 
+#### RODBC Connection String SQL Server
+```
+library(RODBC)
+dbhandle <- odbcDriverConnect('driver={SQL Server};server=mysqlhost;database=mydbname;trusted_connection=true')
+res <- sqlQuery(dbhandle, 'select * from information_schema.tables')
+```
+
 #### Install ODBC 
 ```
 >install.packages("DBI")
