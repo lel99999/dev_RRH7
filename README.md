@@ -42,8 +42,12 @@ $ssh -Y <host> QMLSCENE_DEVICE=software rstudio
 ```
 #### Install RODBC - for R v3.6.0
 ```
-require(devtools)
-install_version("RODBC", version = "1.3-16")
+>require(devtools)
+>install_version("RODBC", version = "1.3-16")
+
+or
+
+>devtools::install_version("RODBC", version = "1.3-16")
 ```
 
 #### RODBC Connection String SQL Server
