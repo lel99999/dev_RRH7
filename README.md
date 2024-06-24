@@ -40,6 +40,11 @@ $ssh -Y <host> QMLSCENE_DEVICE=software rstudio
 >install.packages(c("rJava","RJDBC"))
 
 ```
+#### Install RODBC - for R v3.6.0
+```
+require(devtools)
+install_version("RODBC", version = "1.3-16")
+```
 
 #### Install ODBC 
 ```
